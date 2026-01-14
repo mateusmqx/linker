@@ -27,7 +27,7 @@ func main() {
 	clientWithAuth := github.NewClient(tc)
 
 	// Listando repositórios do usuário autenticado (ou de outro, dependendo das permissões do token)
-	authenticatedUserRepos, _, err := clientWithAuth.Repositories.List(ctx, "", nil) // "" para o usuário autenticado
+	authenticatedUserRepos, _, err := clientWithAuth.Repositories.ListByAuthenticatedUser(ctx, nil)
 	if err != nil {
 		log.Fatalf("Erro ao listar repositórios com autenticação: %v", err)
 	}
