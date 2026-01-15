@@ -7,7 +7,9 @@ import (
 	"os"
 
 	"github.com/google/go-github/v81/github"
+	"github.com/mateusmqx/linker/backend/internal/repoinfo"
 	"golang.org/x/oauth2"
+	"gopkg.in/yaml.v3"
 )
 
 func main() {
@@ -59,8 +61,22 @@ func main() {
 		content, err := fileContent.GetContent()
 		if err != nil {
 			log.Printf("Erro ao decodificar conteúdo: %v", err)
+			continue
 		}
 
 		fmt.Printf("Conteúdo do arquivo:\n%s\n", content)
+
+		var repoInfo repoinfo.RepositoryInfo
+		err = yaml.Unmarshal([]byte(content), &repoInfo)
+		if err != nil {
+			log.Printf("Erro ao fazer unmarshal do conteúdo YAML: %v", err)
+			continue
+		}
+		repoInfo.Owner = owner
+		repoInfo.Name = repo
+
+		fmt.Printf("Informações do Repositório:\nOwner: %s\nName: %s\nDomain: %s\nDependencies: %v\n",
+			repoInfo.Owner, repoInfo.Name, repoInfo.Domain, repoInfo.Dependencies)
+
 	}
 }
