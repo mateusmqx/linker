@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
 
 	"github.com/google/go-github/v81/github"
 	"github.com/mateusmqx/linker/backend/internal/repoinfo"
@@ -33,6 +34,8 @@ func main() {
 	if err != nil {
 		log.Fatalf("Erro ao listar repositórios com autenticação: %v", err)
 	}
+
+	var repoInfos []repoinfo.RepositoryInfo
 
 	fmt.Println("--- Repositórios do usuário autenticado (Autenticado) ---")
 	for _, repo := range authenticatedUserRepos {
@@ -78,5 +81,49 @@ func main() {
 		fmt.Printf("Informações do Repositório:\nOwner: %s\nName: %s\nDomain: %s\nDependencies: %v\n",
 			repoInfo.Owner, repoInfo.Name, repoInfo.Domain, repoInfo.Dependencies)
 
+		repoInfos = append(repoInfos, repoInfo)
 	}
+
+	// Gerar diagrama Mermaid
+	mermaidDiagram := generateMermaidDiagram(repoInfos)
+	fmt.Println("\n--- Diagrama Mermaid Gerado ---")
+	fmt.Println(mermaidDiagram)
+}
+
+func generateMermaidDiagram(repoInfos []repoinfo.RepositoryInfo) string {
+	var sb strings.Builder
+
+	// Início do diagrama
+	sb.WriteString("graph TD\n")
+
+	// 1. Organizar serviços por Domínio para criar Subgraphs (Caixas de agrupamento)
+	domainMap := make(map[string][]repoinfo.RepositoryInfo)
+	for _, s := range repoInfos {
+		domainMap[s.Domain] = append(domainMap[s.Domain], s)
+	}
+
+	// 2. Escrever os Nós (Agrupados por Domínio)
+	for domain, svcList := range domainMap {
+		// Inicia um subgraph para o domínio
+		sb.WriteString(fmt.Sprintf("    subgraph %s\n", strings.ToUpper(domain)))
+
+		for _, s := range svcList {
+			// Formato: id["Nome<br/>(Owner)"]
+			// Usamos HTML <br/> para quebra de linha dentro do nó
+			sb.WriteString(fmt.Sprintf("        %s[\"%s<br/><small>Owner: %s</small>\"]\n", s.Name, s.Name, s.Owner))
+		}
+
+		sb.WriteString("    end\n")
+	}
+
+	// 3. Escrever as Relações (Dependências)
+	sb.WriteString("\n    %% Relacionamentos\n")
+	for _, s := range repoInfos {
+		for _, dep := range s.Dependencies {
+			// O Mermaid desenha 'dep' automaticamente mesmo que não esteja no JSON original
+			sb.WriteString(fmt.Sprintf("    %s --> %s\n", s.Name, dep))
+		}
+	}
+
+	return sb.String()
 }
