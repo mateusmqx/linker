@@ -1,129 +1,160 @@
 package main
 
 import (
-	"context"
 	"fmt"
-	"log"
-	"os"
 	"strings"
-
-	"github.com/google/go-github/v81/github"
-	"github.com/mateusmqx/linker/backend/internal/repoinfo"
-	"golang.org/x/oauth2"
-	"gopkg.in/yaml.v3"
 )
 
-func main() {
-	ctx := context.Background()
-
-	token := os.Getenv("GITHUB_AUTH_TOKEN")
-	if token == "" {
-		fmt.Println("Variável de ambiente GITHUB_AUTH_TOKEN não definida. Pulando exemplo autenticado.")
-		return
-	}
-
-	ts := oauth2.StaticTokenSource(
-		&oauth2.Token{AccessToken: token},
-	)
-	tc := oauth2.NewClient(ctx, ts) // http.Client configurado para OAuth2
-
-	clientWithAuth := github.NewClient(tc)
-
-	// Listando repositórios do usuário autenticado (ou de outro, dependendo das permissões do token)
-	authenticatedUserRepos, _, err := clientWithAuth.Repositories.ListByAuthenticatedUser(ctx, nil)
-	if err != nil {
-		log.Fatalf("Erro ao listar repositórios com autenticação: %v", err)
-	}
-
-	var repoInfos []repoinfo.RepositoryInfo
-
-	fmt.Println("--- Repositórios do usuário autenticado (Autenticado) ---")
-	for _, repo := range authenticatedUserRepos {
-		fmt.Printf("- %s\n", *repo.Name)
-		owner := repo.GetOwner().GetLogin()
-		repo := repo.GetName()
-		path := "linker-info.yml"
-		fileContent, directoryContent, _, err := clientWithAuth.Repositories.GetContents(ctx, owner, repo, path, nil)
-		if err != nil {
-			log.Printf("Erro ao obter conteúdo do linker-info.yml: %v", err)
-			continue
-		}
-
-		// 2. Verificação do tipo de conteúdo retornado
-		if directoryContent != nil {
-			log.Printf("Esperava um arquivo, mas o caminho especificado é um diretório contendo %d itens.", len(directoryContent))
-		}
-
-		// Verifica se é realmente um arquivo e não um diretório
-		if fileContent == nil {
-			log.Printf("O caminho especificado é um diretório, não um arquivo.")
-		}
-
-		// 3. Decodificação do conteúdo
-		// O conteúdo vem em Base64, mas a lib tem este helper que decodifica para string
-		content, err := fileContent.GetContent()
-		if err != nil {
-			log.Printf("Erro ao decodificar conteúdo: %v", err)
-			continue
-		}
-
-		fmt.Printf("Conteúdo do arquivo:\n%s\n", content)
-
-		var repoInfo repoinfo.RepositoryInfo
-		err = yaml.Unmarshal([]byte(content), &repoInfo)
-		if err != nil {
-			log.Printf("Erro ao fazer unmarshal do conteúdo YAML: %v", err)
-			continue
-		}
-		repoInfo.Owner = owner
-		repoInfo.Name = repo
-
-		fmt.Printf("Informações do Repositório:\nOwner: %s\nName: %s\nDomain: %s\nDependencies: %v\n",
-			repoInfo.Owner, repoInfo.Name, repoInfo.Domain, repoInfo.Dependencies)
-
-		repoInfos = append(repoInfos, repoInfo)
-	}
-
-	// Gerar diagrama Mermaid
-	mermaidDiagram := generateMermaidDiagram(repoInfos)
-	fmt.Println("\n--- Diagrama Mermaid Gerado ---")
-	fmt.Println(mermaidDiagram)
+type App struct {
+	Name             string
+	System           string
+	Team             string
+	Domain           string
+	Dependencies     []string
+	RepositoryUrl    string
+	DocumentationUrl string
 }
 
-func generateMermaidDiagram(repoInfos []repoinfo.RepositoryInfo) string {
+func main() {
+	apps := generateApps()
+	mermaid := generateMermaid(apps)
+	fmt.Println(mermaid)
+}
+
+func generateMermaid(apps []App) string {
 	var sb strings.Builder
 
-	// Início do diagrama
-	sb.WriteString("graph TD\n")
+	// 1. Configuração do Tema (Dark Mode)
+	sb.WriteString("%%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true }}}%%\n")
+	sb.WriteString("flowchart TD\n")
 
-	// 1. Organizar serviços por Domínio para criar Subgraphs (Caixas de agrupamento)
-	domainMap := make(map[string][]repoinfo.RepositoryInfo)
-	for _, s := range repoInfos {
-		domainMap[s.Domain] = append(domainMap[s.Domain], s)
+	// 2. Definição de Estilos (CSS)
+	// Blue style
+	sb.WriteString("    classDef blue stroke:#3b82f6,stroke-width:2px,fill:#1e293b,color:white,rx:10,ry:10;\n")
+	// Purple style
+	sb.WriteString("    classDef purple stroke:#a855f7,stroke-width:2px,fill:#1e293b,color:white,rx:10,ry:10;\n")
+	// Pink/Red style
+	sb.WriteString("    classDef pink stroke:#ec4899,stroke-width:2px,fill:#1e293b,color:white,rx:10,ry:10;\n")
+	// Default style for external deps
+	sb.WriteString("    classDef external stroke:#64748b,stroke-width:1px,stroke-dasharray: 5 5,fill:#0f172a,color:#cbd5e1,rx:5,ry:5;\n\n")
+
+	// agrupamento por times
+	teamMap := make(map[string][]App)
+	for _, app := range apps {
+		teamMap[app.Team] = append(teamMap[app.Team], app)
 	}
 
-	// 2. Escrever os Nós (Agrupados por Domínio)
-	for domain, svcList := range domainMap {
-		// Inicia um subgraph para o domínio
-		sb.WriteString(fmt.Sprintf("    subgraph %s\n", strings.ToUpper(domain)))
+	// map colors to teams
+	teamColors := map[string]string{
+		"fraud-prevention": "blue",
+		"core-banking":     "purple",
+	}
 
-		for _, s := range svcList {
-			// Formato: id["Nome<br/>(Owner)"]
-			// Usamos HTML <br/> para quebra de linha dentro do nó
-			sb.WriteString(fmt.Sprintf("        %s[\"%s<br/><small>Owner: %s</small>\"]\n", s.Name, s.Name, s.Owner))
+	// 3. Gerar os Nós (Nodes) com HTML
+	for team, appList := range teamMap {
+		// Nome do subgrafo (Time)
+		sb.WriteString(fmt.Sprintf("    subgraph %s [Time: %s]\n", team, strings.ToUpper(team)))
+		sb.WriteString("    direction TB\n")
+
+		for _, app := range appList {
+			// Label com HTML
+			label := fmt.Sprintf("\"<b>%s</b><br/><span style='font-size:12px'>Sys: %s</span><br/><br/><a href='%s' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='%s' style='color:#60a5fa;text-decoration:none'>Confluence</a>\"",
+				app.Name, app.System, app.RepositoryUrl, app.DocumentationUrl)
+
+			sb.WriteString(fmt.Sprintf("        %s[%s]\n", app.Name, label))
+		}
+		sb.WriteString("    end\n") // Fim do subgraph
+
+		// Aplicar estilo aos nós deste domínio
+		style := teamColors[team]
+		if style == "" {
+			style = "blue"
 		}
 
-		sb.WriteString("    end\n")
+		// Listar nomes para aplicar classe em lote
+		var names []string
+		for _, s := range appList {
+			names = append(names, s.Name)
+		}
+		sb.WriteString(fmt.Sprintf("    class %s %s;\n\n", strings.Join(names, ","), style))
 	}
 
-	// 3. Escrever as Relações (Dependências)
-	sb.WriteString("\n    %% Relacionamentos\n")
-	for _, s := range repoInfos {
+	// 4. Gerar as Dependências (Edges)
+	// Vamos identificar quais dependências são "externas" (não estão no JSON principal)
+	knownApps := make(map[string]bool)
+	for _, s := range apps {
+		knownApps[s.Name] = true
+	}
+
+	sb.WriteString("    %% Dependências\n")
+	for _, s := range apps {
 		for _, dep := range s.Dependencies {
-			// O Mermaid desenha 'dep' automaticamente mesmo que não esteja no JSON original
 			sb.WriteString(fmt.Sprintf("    %s --> %s\n", s.Name, dep))
+
+			// Se a dependência for externa, aplicamos um estilo diferente
+			if !knownApps[dep] {
+				sb.WriteString(fmt.Sprintf("    class %s external;\n", dep))
+			}
 		}
 	}
 
 	return sb.String()
+}
+
+func generateApps() []App {
+	return []App{
+		{
+			Name:   "fraud-engine.viper-api",
+			System: "fraud-engine",
+			Team:   "fraud-prevention",
+			Domain: "risk",
+			Dependencies: []string{
+				"fraud-engine.reference-data",
+				"fraud-solution.risk-location",
+			},
+		},
+		{
+			Name:         "fraud-engine.reference-data",
+			System:       "fraud-engine",
+			Team:         "fraud-prevention",
+			Domain:       "risk",
+			Dependencies: []string{},
+		},
+		{
+			Name:         "fraud-solution.risk-location",
+			System:       "fraud-solution",
+			Team:         "fraud-prevention",
+			Domain:       "risk",
+			Dependencies: []string{},
+		},
+		{
+			Name:   "fraud-engine.viper-bff",
+			System: "fraud-engine",
+			Team:   "fraud-prevention",
+			Domain: "risk",
+			Dependencies: []string{
+				"fraud-engine.viper-api",
+				"fraud-engine.events-api",
+			},
+		},
+		{
+			Name:   "transfer-antifraud.pix-out",
+			System: "transfer-antifraud",
+			Team:   "fraud-prevention",
+			Domain: "risk",
+			Dependencies: []string{
+				"checking-account.account-service",
+				"account.dict",
+				"score.mule-account",
+				"fraud-engine.viper-api",
+			},
+		},
+		{
+			Name:         "account.dict",
+			System:       "account",
+			Team:         "core-banking",
+			Domain:       "accounts",
+			Dependencies: []string{},
+		},
+	}
 }
