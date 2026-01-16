@@ -1,19 +1,20 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 	"strings"
 )
 
 type App struct {
-	Name             string
-	System           string
-	Team             string
-	Domain           string
-	Dependencies     []string
-	RepositoryUrl    string
-	DocumentationUrl string
+	Name             string   `json:"name"`
+	System           string   `json:"system"`
+	Team             string   `json:"team"`
+	Domain           string   `json:"domain"`
+	Dependencies     []string `json:"dependencies"`
+	RepositoryUrl    string   `json:"repositoryUrl"`
+	DocumentationUrl string   `json:"documentationUrl"`
 }
 
 func main() {
@@ -26,6 +27,19 @@ func main() {
 		fmt.Println("Erro ao escrever o arquivo:", err)
 		return
 	}
+
+	jsonBytes, err := json.Marshal(apps)
+	if err != nil {
+		fmt.Println("Erro ao serializar JSON:", err)
+		return
+	}
+
+	err = os.WriteFile("apps.json", jsonBytes, 0644)
+	if err != nil {
+		fmt.Println("Erro ao escrever o arquivo JSON:", err)
+		return
+	}
+
 	fmt.Println("Diagrama gerado com sucesso em architecture_diagram.md")
 }
 

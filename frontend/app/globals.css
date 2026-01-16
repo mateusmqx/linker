@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Define as cores do modo escuro como padrão */
+  background-color: #0f172a; /* Um azul bem escuro (Slate-900) */
+  color: #e2e8f0;            /* Um cinza claro para texto (Slate-200) */
+}

@@ -5,74 +5,13 @@ flowchart TD
     classDef pink stroke:#ec4899,stroke-width:2px,fill:#1e293b,color:white,rx:10,ry:10;
     classDef external stroke:#64748b,stroke-width:1px,stroke-dasharray: 5 5,fill:#0f172a,color:#cbd5e1,rx:5,ry:5;
 
-    subgraph lending [Time: LENDING]
+    subgraph data-science [Time: DATA-SCIENCE]
     direction TB
-        loan.origination-api["<b>loan.origination-api</b><br/><span style='font-size:12px'>Sys: loan</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
-        loan.servicing-engine["<b>loan.servicing-engine</b><br/><span style='font-size:12px'>Sys: loan</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+        ml.model-inference["<b>ml.model-inference</b><br/><span style='font-size:12px'>Sys: ml</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+        analytics.customer-journey["<b>analytics.customer-journey</b><br/><span style='font-size:12px'>Sys: analytics</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+        behavior.anomaly-detector["<b>behavior.anomaly-detector</b><br/><span style='font-size:12px'>Sys: behavior</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
     end
-    class loan.origination-api,loan.servicing-engine blue;
-
-    subgraph products [Time: PRODUCTS]
-    direction TB
-        savings.account-service["<b>savings.account-service</b><br/><span style='font-size:12px'>Sys: savings</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
-        savings.interest-calculator["<b>savings.interest-calculator</b><br/><span style='font-size:12px'>Sys: interest</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
-        insurance.policy-engine["<b>insurance.policy-engine</b><br/><span style='font-size:12px'>Sys: insurance</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
-        subscription.billing-engine["<b>subscription.billing-engine</b><br/><span style='font-size:12px'>Sys: subscription</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
-    end
-    class savings.account-service,savings.interest-calculator,insurance.policy-engine,subscription.billing-engine blue;
-
-    subgraph hr [Time: HR]
-    direction TB
-        employee.registry["<b>employee.registry</b><br/><span style='font-size:12px'>Sys: employee</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
-        attendance.tracking-system["<b>attendance.tracking-system</b><br/><span style='font-size:12px'>Sys: attendance</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
-        leave.management-api["<b>leave.management-api</b><br/><span style='font-size:12px'>Sys: leave</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
-        performance.evaluation-system["<b>performance.evaluation-system</b><br/><span style='font-size:12px'>Sys: performance</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
-        training.learning-platform["<b>training.learning-platform</b><br/><span style='font-size:12px'>Sys: training</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
-        recruitment.job-portal["<b>recruitment.job-portal</b><br/><span style='font-size:12px'>Sys: recruitment</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
-    end
-    class employee.registry,attendance.tracking-system,leave.management-api,performance.evaluation-system,training.learning-platform,recruitment.job-portal blue;
-
-    subgraph wealth [Time: WEALTH]
-    direction TB
-        investment.portfolio-api["<b>investment.portfolio-api</b><br/><span style='font-size:12px'>Sys: investment</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
-        external.market-data["<b>external.market-data</b><br/><span style='font-size:12px'>Sys: external</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
-    end
-    class investment.portfolio-api,external.market-data blue;
-
-    subgraph risk-analytics [Time: RISK-ANALYTICS]
-    direction TB
-        score.mule-account["<b>score.mule-account</b><br/><span style='font-size:12px'>Sys: score</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
-        risk.rating-service["<b>risk.rating-service</b><br/><span style='font-size:12px'>Sys: risk</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
-        risk.exposure-monitor["<b>risk.exposure-monitor</b><br/><span style='font-size:12px'>Sys: risk</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
-        limit.management-service["<b>limit.management-service</b><br/><span style='font-size:12px'>Sys: limit</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
-        network.graph-analysis["<b>network.graph-analysis</b><br/><span style='font-size:12px'>Sys: network</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
-    end
-    class score.mule-account,risk.rating-service,risk.exposure-monitor,limit.management-service,network.graph-analysis blue;
-
-    subgraph credit-products [Time: CREDIT-PRODUCTS]
-    direction TB
-        credit.product-service["<b>credit.product-service</b><br/><span style='font-size:12px'>Sys: credit</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
-        credit.pricing-engine["<b>credit.pricing-engine</b><br/><span style='font-size:12px'>Sys: credit</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
-        credit.disbursement-api["<b>credit.disbursement-api</b><br/><span style='font-size:12px'>Sys: credit</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
-    end
-    class credit.product-service,credit.pricing-engine,credit.disbursement-api blue;
-
-    subgraph compliance [Time: COMPLIANCE]
-    direction TB
-        compliance.kyc["<b>compliance.kyc</b><br/><span style='font-size:12px'>Sys: compliance</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
-        compliance.aml-check["<b>compliance.aml-check</b><br/><span style='font-size:12px'>Sys: compliance</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
-        security.audit-logger["<b>security.audit-logger</b><br/><span style='font-size:12px'>Sys: security</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
-        external.document-validator["<b>external.document-validator</b><br/><span style='font-size:12px'>Sys: external</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
-        external.sanctions-list["<b>external.sanctions-list</b><br/><span style='font-size:12px'>Sys: external</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
-    end
-    class compliance.kyc,compliance.aml-check,security.audit-logger,external.document-validator,external.sanctions-list blue;
-
-    subgraph partnerships [Time: PARTNERSHIPS]
-    direction TB
-        merchant.onboarding-api["<b>merchant.onboarding-api</b><br/><span style='font-size:12px'>Sys: merchant</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
-        affiliate.commission-calculator["<b>affiliate.commission-calculator</b><br/><span style='font-size:12px'>Sys: affiliate</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
-    end
-    class merchant.onboarding-api,affiliate.commission-calculator blue;
+    class ml.model-inference,analytics.customer-journey,behavior.anomaly-detector blue;
 
     subgraph customer-service [Time: CUSTOMER-SERVICE]
     direction TB
@@ -87,6 +26,24 @@ flowchart TD
     end
     class dispute.management-api,chargeback.processor,feedback.survey-api,rating.service-quality,chatbot.conversation-engine,help-desk.ticket-management,knowledge-base.article-service,warranty.claim-processor blue;
 
+    subgraph hr [Time: HR]
+    direction TB
+        employee.registry["<b>employee.registry</b><br/><span style='font-size:12px'>Sys: employee</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+        attendance.tracking-system["<b>attendance.tracking-system</b><br/><span style='font-size:12px'>Sys: attendance</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+        leave.management-api["<b>leave.management-api</b><br/><span style='font-size:12px'>Sys: leave</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+        performance.evaluation-system["<b>performance.evaluation-system</b><br/><span style='font-size:12px'>Sys: performance</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+        training.learning-platform["<b>training.learning-platform</b><br/><span style='font-size:12px'>Sys: training</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+        recruitment.job-portal["<b>recruitment.job-portal</b><br/><span style='font-size:12px'>Sys: recruitment</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+    end
+    class employee.registry,attendance.tracking-system,leave.management-api,performance.evaluation-system,training.learning-platform,recruitment.job-portal blue;
+
+    subgraph procurement [Time: PROCUREMENT]
+    direction TB
+        vendor.management-api["<b>vendor.management-api</b><br/><span style='font-size:12px'>Sys: vendor</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+        procurement.order-system["<b>procurement.order-system</b><br/><span style='font-size:12px'>Sys: procurement</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+    end
+    class vendor.management-api,procurement.order-system blue;
+
     subgraph fraud-prevention [Time: FRAUD-PREVENTION]
     direction TB
         fraud-engine.viper-api["<b>fraud-engine.viper-api</b><br/><span style='font-size:12px'>Sys: fraud-engine</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
@@ -99,6 +56,58 @@ flowchart TD
     end
     class fraud-engine.viper-api,fraud-engine.reference-data,fraud-solution.risk-location,fraud-engine.viper-bff,transfer-antifraud.pix-out,fraud-engine.events-api,velocity.check-engine blue;
 
+    subgraph compliance [Time: COMPLIANCE]
+    direction TB
+        compliance.kyc["<b>compliance.kyc</b><br/><span style='font-size:12px'>Sys: compliance</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+        compliance.aml-check["<b>compliance.aml-check</b><br/><span style='font-size:12px'>Sys: compliance</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+        security.audit-logger["<b>security.audit-logger</b><br/><span style='font-size:12px'>Sys: security</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+        external.document-validator["<b>external.document-validator</b><br/><span style='font-size:12px'>Sys: external</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+        external.sanctions-list["<b>external.sanctions-list</b><br/><span style='font-size:12px'>Sys: external</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+    end
+    class compliance.kyc,compliance.aml-check,security.audit-logger,external.document-validator,external.sanctions-list blue;
+
+    subgraph data-engineering [Time: DATA-ENGINEERING]
+    direction TB
+        data-lake.customer-events["<b>data-lake.customer-events</b><br/><span style='font-size:12px'>Sys: data-lake</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+        data-lake.transactions["<b>data-lake.transactions</b><br/><span style='font-size:12px'>Sys: data-lake</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+        reporting.analytics-dashboard["<b>reporting.analytics-dashboard</b><br/><span style='font-size:12px'>Sys: reporting</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+        batch.scheduled-jobs["<b>batch.scheduled-jobs</b><br/><span style='font-size:12px'>Sys: batch</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+        migration.data-sync["<b>migration.data-sync</b><br/><span style='font-size:12px'>Sys: migration</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+    end
+    class data-lake.customer-events,data-lake.transactions,reporting.analytics-dashboard,batch.scheduled-jobs,migration.data-sync blue;
+
+    subgraph wealth [Time: WEALTH]
+    direction TB
+        investment.portfolio-api["<b>investment.portfolio-api</b><br/><span style='font-size:12px'>Sys: investment</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+        external.market-data["<b>external.market-data</b><br/><span style='font-size:12px'>Sys: external</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+    end
+    class investment.portfolio-api,external.market-data blue;
+
+    subgraph operations [Time: OPERATIONS]
+    direction TB
+        asset.management-system["<b>asset.management-system</b><br/><span style='font-size:12px'>Sys: asset</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+        facility.booking-api["<b>facility.booking-api</b><br/><span style='font-size:12px'>Sys: facility</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+        office.expense-tracking["<b>office.expense-tracking</b><br/><span style='font-size:12px'>Sys: office</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+        inventory.stock-management["<b>inventory.stock-management</b><br/><span style='font-size:12px'>Sys: inventory</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+        logistics.shipment-tracking["<b>logistics.shipment-tracking</b><br/><span style='font-size:12px'>Sys: logistics</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+    end
+    class asset.management-system,facility.booking-api,office.expense-tracking,inventory.stock-management,logistics.shipment-tracking blue;
+
+    subgraph credit-products [Time: CREDIT-PRODUCTS]
+    direction TB
+        credit.product-service["<b>credit.product-service</b><br/><span style='font-size:12px'>Sys: credit</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+        credit.pricing-engine["<b>credit.pricing-engine</b><br/><span style='font-size:12px'>Sys: credit</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+        credit.disbursement-api["<b>credit.disbursement-api</b><br/><span style='font-size:12px'>Sys: credit</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+    end
+    class credit.product-service,credit.pricing-engine,credit.disbursement-api blue;
+
+    subgraph lending [Time: LENDING]
+    direction TB
+        loan.origination-api["<b>loan.origination-api</b><br/><span style='font-size:12px'>Sys: loan</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+        loan.servicing-engine["<b>loan.servicing-engine</b><br/><span style='font-size:12px'>Sys: loan</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+    end
+    class loan.origination-api,loan.servicing-engine blue;
+
     subgraph finance [Time: FINANCE]
     direction TB
         accounting.ledger["<b>accounting.ledger</b><br/><span style='font-size:12px'>Sys: accounting</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
@@ -110,6 +119,28 @@ flowchart TD
         payroll.processing-engine["<b>payroll.processing-engine</b><br/><span style='font-size:12px'>Sys: payroll</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
     end
     class accounting.ledger,accounting.reconciliation,reporting.statement-generator,tax.calculation-engine,invoice.generation-api,expense.management-api,payroll.processing-engine blue;
+
+    subgraph partnerships [Time: PARTNERSHIPS]
+    direction TB
+        merchant.onboarding-api["<b>merchant.onboarding-api</b><br/><span style='font-size:12px'>Sys: merchant</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+        affiliate.commission-calculator["<b>affiliate.commission-calculator</b><br/><span style='font-size:12px'>Sys: affiliate</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+    end
+    class merchant.onboarding-api,affiliate.commission-calculator blue;
+
+    subgraph marketing [Time: MARKETING]
+    direction TB
+        promotion.offers-api["<b>promotion.offers-api</b><br/><span style='font-size:12px'>Sys: promotion</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+    end
+    class promotion.offers-api blue;
+
+    subgraph core-banking [Time: CORE-BANKING]
+    direction TB
+        account.dict["<b>account.dict</b><br/><span style='font-size:12px'>Sys: account</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+        checking-account.account-service["<b>checking-account.account-service</b><br/><span style='font-size:12px'>Sys: checking-account</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+        customer.profile-api["<b>customer.profile-api</b><br/><span style='font-size:12px'>Sys: customer</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+        customer.preferences-service["<b>customer.preferences-service</b><br/><span style='font-size:12px'>Sys: customer</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+    end
+    class account.dict,checking-account.account-service,customer.profile-api,customer.preferences-service purple;
 
     subgraph platform [Time: PLATFORM]
     direction TB
@@ -137,37 +168,24 @@ flowchart TD
     end
     class core.crypto,core.auth-service,api-gateway.router,monitoring.rate-limiter,monitoring.logging-service,data-store.redis-cache,notification.email-service,notification.sms-service,webhook.event-dispatcher,integration.partner-api,security.secrets-manager,cache.invalidation-service,queue.message-broker,async.event-processor,search.customer-search,mobile.push-notification,document.generation-service,document.archive-service,translation.i18n-service,backup.disaster-recovery,test.environment-provisioner blue;
 
-    subgraph marketing [Time: MARKETING]
+    subgraph products [Time: PRODUCTS]
     direction TB
-        promotion.offers-api["<b>promotion.offers-api</b><br/><span style='font-size:12px'>Sys: promotion</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+        savings.account-service["<b>savings.account-service</b><br/><span style='font-size:12px'>Sys: savings</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+        savings.interest-calculator["<b>savings.interest-calculator</b><br/><span style='font-size:12px'>Sys: interest</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+        insurance.policy-engine["<b>insurance.policy-engine</b><br/><span style='font-size:12px'>Sys: insurance</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+        subscription.billing-engine["<b>subscription.billing-engine</b><br/><span style='font-size:12px'>Sys: subscription</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
     end
-    class promotion.offers-api blue;
+    class savings.account-service,savings.interest-calculator,insurance.policy-engine,subscription.billing-engine blue;
 
-    subgraph operations [Time: OPERATIONS]
+    subgraph risk-analytics [Time: RISK-ANALYTICS]
     direction TB
-        asset.management-system["<b>asset.management-system</b><br/><span style='font-size:12px'>Sys: asset</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
-        facility.booking-api["<b>facility.booking-api</b><br/><span style='font-size:12px'>Sys: facility</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
-        office.expense-tracking["<b>office.expense-tracking</b><br/><span style='font-size:12px'>Sys: office</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
-        inventory.stock-management["<b>inventory.stock-management</b><br/><span style='font-size:12px'>Sys: inventory</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
-        logistics.shipment-tracking["<b>logistics.shipment-tracking</b><br/><span style='font-size:12px'>Sys: logistics</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+        score.mule-account["<b>score.mule-account</b><br/><span style='font-size:12px'>Sys: score</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+        risk.rating-service["<b>risk.rating-service</b><br/><span style='font-size:12px'>Sys: risk</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+        risk.exposure-monitor["<b>risk.exposure-monitor</b><br/><span style='font-size:12px'>Sys: risk</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+        limit.management-service["<b>limit.management-service</b><br/><span style='font-size:12px'>Sys: limit</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
+        network.graph-analysis["<b>network.graph-analysis</b><br/><span style='font-size:12px'>Sys: network</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
     end
-    class asset.management-system,facility.booking-api,office.expense-tracking,inventory.stock-management,logistics.shipment-tracking blue;
-
-    subgraph procurement [Time: PROCUREMENT]
-    direction TB
-        vendor.management-api["<b>vendor.management-api</b><br/><span style='font-size:12px'>Sys: vendor</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
-        procurement.order-system["<b>procurement.order-system</b><br/><span style='font-size:12px'>Sys: procurement</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
-    end
-    class vendor.management-api,procurement.order-system blue;
-
-    subgraph core-banking [Time: CORE-BANKING]
-    direction TB
-        account.dict["<b>account.dict</b><br/><span style='font-size:12px'>Sys: account</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
-        checking-account.account-service["<b>checking-account.account-service</b><br/><span style='font-size:12px'>Sys: checking-account</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
-        customer.profile-api["<b>customer.profile-api</b><br/><span style='font-size:12px'>Sys: customer</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
-        customer.preferences-service["<b>customer.preferences-service</b><br/><span style='font-size:12px'>Sys: customer</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
-    end
-    class account.dict,checking-account.account-service,customer.profile-api,customer.preferences-service purple;
+    class score.mule-account,risk.rating-service,risk.exposure-monitor,limit.management-service,network.graph-analysis blue;
 
     subgraph payments [Time: PAYMENTS]
     direction TB
@@ -190,24 +208,6 @@ flowchart TD
         card.authorization-engine["<b>card.authorization-engine</b><br/><span style='font-size:12px'>Sys: card</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
     end
     class card.core-service,card.tokenizer,card.authorization-engine blue;
-
-    subgraph data-engineering [Time: DATA-ENGINEERING]
-    direction TB
-        data-lake.customer-events["<b>data-lake.customer-events</b><br/><span style='font-size:12px'>Sys: data-lake</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
-        data-lake.transactions["<b>data-lake.transactions</b><br/><span style='font-size:12px'>Sys: data-lake</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
-        reporting.analytics-dashboard["<b>reporting.analytics-dashboard</b><br/><span style='font-size:12px'>Sys: reporting</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
-        batch.scheduled-jobs["<b>batch.scheduled-jobs</b><br/><span style='font-size:12px'>Sys: batch</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
-        migration.data-sync["<b>migration.data-sync</b><br/><span style='font-size:12px'>Sys: migration</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
-    end
-    class data-lake.customer-events,data-lake.transactions,reporting.analytics-dashboard,batch.scheduled-jobs,migration.data-sync blue;
-
-    subgraph data-science [Time: DATA-SCIENCE]
-    direction TB
-        ml.model-inference["<b>ml.model-inference</b><br/><span style='font-size:12px'>Sys: ml</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
-        analytics.customer-journey["<b>analytics.customer-journey</b><br/><span style='font-size:12px'>Sys: analytics</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
-        behavior.anomaly-detector["<b>behavior.anomaly-detector</b><br/><span style='font-size:12px'>Sys: behavior</span><br/><br/><a href='' style='color:#60a5fa;text-decoration:none'>Github</a> &nbsp; <a href='' style='color:#60a5fa;text-decoration:none'>Confluence</a>"]
-    end
-    class ml.model-inference,analytics.customer-journey,behavior.anomaly-detector blue;
 
     %% Dependências
     fraud-engine.viper-api --> fraud-engine.reference-data
