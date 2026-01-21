@@ -1,0 +1,1193 @@
+[
+  {
+    "name": "fraud-engine.viper-api",
+    "system": "fraud-engine",
+    "team": "fraud-prevention",
+    "domain": "risk",
+    "dependencies": [
+      "fraud-engine.reference-data",
+      "fraud-solution.risk-location"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "fraud-engine.reference-data",
+    "system": "fraud-engine",
+    "team": "fraud-prevention",
+    "domain": "risk",
+    "dependencies": [],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "fraud-solution.risk-location",
+    "system": "fraud-solution",
+    "team": "fraud-prevention",
+    "domain": "risk",
+    "dependencies": [],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "fraud-engine.viper-bff",
+    "system": "fraud-engine",
+    "team": "fraud-prevention",
+    "domain": "risk",
+    "dependencies": [
+      "fraud-engine.viper-api",
+      "fraud-engine.events-api"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "transfer-antifraud.pix-out",
+    "system": "transfer-antifraud",
+    "team": "fraud-prevention",
+    "domain": "risk",
+    "dependencies": [
+      "checking-account.account-service",
+      "account.dict",
+      "score.mule-account",
+      "fraud-engine.viper-api"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "account.dict",
+    "system": "account",
+    "team": "core-banking",
+    "domain": "accounts",
+    "dependencies": [],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "fraud-engine.events-api",
+    "system": "fraud-engine",
+    "team": "fraud-prevention",
+    "domain": "risk",
+    "dependencies": [
+      "fraud-engine.reference-data"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "checking-account.account-service",
+    "system": "checking-account",
+    "team": "core-banking",
+    "domain": "accounts",
+    "dependencies": [
+      "account.dict",
+      "core.crypto"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "score.mule-account",
+    "system": "score",
+    "team": "risk-analytics",
+    "domain": "risk",
+    "dependencies": [
+      "ml.model-inference",
+      "data-lake.customer-events"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "payment.pix-api",
+    "system": "payment",
+    "team": "payments",
+    "domain": "payments",
+    "dependencies": [
+      "fraud-engine.viper-api",
+      "transfer-antifraud.pix-out",
+      "checking-account.account-service"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "payment.ted-processor",
+    "system": "payment",
+    "team": "payments",
+    "domain": "payments",
+    "dependencies": [
+      "payment.settlement-api",
+      "compliance.aml-check"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "payment.settlement-api",
+    "system": "payment",
+    "team": "payments",
+    "domain": "payments",
+    "dependencies": [
+      "accounting.ledger"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "card.core-service",
+    "system": "card",
+    "team": "card-platform",
+    "domain": "cards",
+    "dependencies": [
+      "account.dict",
+      "card.tokenizer"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "card.tokenizer",
+    "system": "card",
+    "team": "card-platform",
+    "domain": "cards",
+    "dependencies": [
+      "core.crypto"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "card.authorization-engine",
+    "system": "card",
+    "team": "card-platform",
+    "domain": "cards",
+    "dependencies": [
+      "fraud-engine.viper-api",
+      "card.core-service"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "credit.product-service",
+    "system": "credit",
+    "team": "credit-products",
+    "domain": "credit",
+    "dependencies": [
+      "account.dict",
+      "credit.pricing-engine",
+      "compliance.kyc"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "credit.pricing-engine",
+    "system": "credit",
+    "team": "credit-products",
+    "domain": "credit",
+    "dependencies": [
+      "score.mule-account",
+      "risk.rating-service"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "credit.disbursement-api",
+    "system": "credit",
+    "team": "credit-products",
+    "domain": "credit",
+    "dependencies": [
+      "credit.product-service",
+      "payment.settlement-api"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "loan.origination-api",
+    "system": "loan",
+    "team": "lending",
+    "domain": "lending",
+    "dependencies": [
+      "credit.product-service",
+      "compliance.kyc",
+      "score.mule-account"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "loan.servicing-engine",
+    "system": "loan",
+    "team": "lending",
+    "domain": "lending",
+    "dependencies": [
+      "loan.origination-api",
+      "accounting.ledger"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "compliance.kyc",
+    "system": "compliance",
+    "team": "compliance",
+    "domain": "compliance",
+    "dependencies": [
+      "account.dict",
+      "external.document-validator"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "compliance.aml-check",
+    "system": "compliance",
+    "team": "compliance",
+    "domain": "compliance",
+    "dependencies": [
+      "external.sanctions-list",
+      "data-lake.customer-events"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "risk.rating-service",
+    "system": "risk",
+    "team": "risk-analytics",
+    "domain": "risk",
+    "dependencies": [
+      "score.mule-account",
+      "data-lake.customer-events"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "risk.exposure-monitor",
+    "system": "risk",
+    "team": "risk-analytics",
+    "domain": "risk",
+    "dependencies": [
+      "risk.rating-service",
+      "accounting.ledger"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "accounting.ledger",
+    "system": "accounting",
+    "team": "finance",
+    "domain": "finance",
+    "dependencies": [
+      "core.crypto"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "accounting.reconciliation",
+    "system": "accounting",
+    "team": "finance",
+    "domain": "finance",
+    "dependencies": [
+      "accounting.ledger",
+      "data-lake.transactions"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "core.crypto",
+    "system": "core",
+    "team": "platform",
+    "domain": "security",
+    "dependencies": [],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "core.auth-service",
+    "system": "core",
+    "team": "platform",
+    "domain": "security",
+    "dependencies": [
+      "core.crypto"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "api-gateway.router",
+    "system": "api-gateway",
+    "team": "platform",
+    "domain": "platform",
+    "dependencies": [
+      "core.auth-service",
+      "monitoring.rate-limiter"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "monitoring.rate-limiter",
+    "system": "monitoring",
+    "team": "platform",
+    "domain": "platform",
+    "dependencies": [
+      "data-store.redis-cache"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "monitoring.logging-service",
+    "system": "monitoring",
+    "team": "platform",
+    "domain": "platform",
+    "dependencies": [],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "data-store.redis-cache",
+    "system": "data-store",
+    "team": "platform",
+    "domain": "platform",
+    "dependencies": [],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "data-lake.customer-events",
+    "system": "data-lake",
+    "team": "data-engineering",
+    "domain": "data",
+    "dependencies": [],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "data-lake.transactions",
+    "system": "data-lake",
+    "team": "data-engineering",
+    "domain": "data",
+    "dependencies": [],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "ml.model-inference",
+    "system": "ml",
+    "team": "data-science",
+    "domain": "analytics",
+    "dependencies": [
+      "data-lake.customer-events",
+      "data-lake.transactions"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "notification.email-service",
+    "system": "notification",
+    "team": "platform",
+    "domain": "communication",
+    "dependencies": [
+      "account.dict"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "notification.sms-service",
+    "system": "notification",
+    "team": "platform",
+    "domain": "communication",
+    "dependencies": [
+      "account.dict"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "transfer.domestic-service",
+    "system": "transfer",
+    "team": "payments",
+    "domain": "payments",
+    "dependencies": [
+      "payment.pix-api",
+      "fraud-engine.viper-api"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "transfer.international-service",
+    "system": "transfer",
+    "team": "payments",
+    "domain": "payments",
+    "dependencies": [
+      "payment.ted-processor",
+      "compliance.aml-check"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "customer.profile-api",
+    "system": "customer",
+    "team": "core-banking",
+    "domain": "customers",
+    "dependencies": [
+      "account.dict",
+      "notification.email-service"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "customer.preferences-service",
+    "system": "customer",
+    "team": "core-banking",
+    "domain": "customers",
+    "dependencies": [
+      "customer.profile-api",
+      "data-store.redis-cache"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "savings.account-service",
+    "system": "savings",
+    "team": "products",
+    "domain": "products",
+    "dependencies": [
+      "account.dict",
+      "interest.calculator"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "savings.interest-calculator",
+    "system": "interest",
+    "team": "products",
+    "domain": "products",
+    "dependencies": [
+      "accounting.ledger"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "investment.portfolio-api",
+    "system": "investment",
+    "team": "wealth",
+    "domain": "investment",
+    "dependencies": [
+      "account.dict",
+      "external.market-data"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "insurance.policy-engine",
+    "system": "insurance",
+    "team": "products",
+    "domain": "products",
+    "dependencies": [
+      "account.dict",
+      "risk.rating-service"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "reporting.statement-generator",
+    "system": "reporting",
+    "team": "finance",
+    "domain": "reporting",
+    "dependencies": [
+      "accounting.ledger",
+      "customer.profile-api"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "reporting.analytics-dashboard",
+    "system": "reporting",
+    "team": "data-engineering",
+    "domain": "reporting",
+    "dependencies": [
+      "data-lake.transactions",
+      "data-lake.customer-events"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "webhook.event-dispatcher",
+    "system": "webhook",
+    "team": "platform",
+    "domain": "integration",
+    "dependencies": [
+      "monitoring.logging-service",
+      "data-store.redis-cache"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "integration.partner-api",
+    "system": "integration",
+    "team": "platform",
+    "domain": "integration",
+    "dependencies": [
+      "core.auth-service",
+      "webhook.event-dispatcher"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "security.secrets-manager",
+    "system": "security",
+    "team": "platform",
+    "domain": "security",
+    "dependencies": [],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "security.audit-logger",
+    "system": "security",
+    "team": "compliance",
+    "domain": "compliance",
+    "dependencies": [
+      "monitoring.logging-service"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "cache.invalidation-service",
+    "system": "cache",
+    "team": "platform",
+    "domain": "platform",
+    "dependencies": [
+      "data-store.redis-cache"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "batch.scheduled-jobs",
+    "system": "batch",
+    "team": "data-engineering",
+    "domain": "data",
+    "dependencies": [
+      "accounting.reconciliation",
+      "data-lake.transactions"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "queue.message-broker",
+    "system": "queue",
+    "team": "platform",
+    "domain": "platform",
+    "dependencies": [],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "async.event-processor",
+    "system": "async",
+    "team": "platform",
+    "domain": "platform",
+    "dependencies": [
+      "queue.message-broker",
+      "monitoring.logging-service"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "merchant.onboarding-api",
+    "system": "merchant",
+    "team": "partnerships",
+    "domain": "merchants",
+    "dependencies": [
+      "compliance.kyc",
+      "account.dict"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "merchant.settlement-service",
+    "system": "merchant",
+    "team": "payments",
+    "domain": "merchants",
+    "dependencies": [
+      "payment.settlement-api",
+      "merchant.onboarding-api"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "affiliate.commission-calculator",
+    "system": "affiliate",
+    "team": "partnerships",
+    "domain": "merchants",
+    "dependencies": [
+      "accounting.ledger",
+      "data-lake.transactions"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "subscription.billing-engine",
+    "system": "subscription",
+    "team": "products",
+    "domain": "products",
+    "dependencies": [
+      "account.dict",
+      "payment.pix-api"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "promotion.offers-api",
+    "system": "promotion",
+    "team": "marketing",
+    "domain": "marketing",
+    "dependencies": [
+      "customer.preferences-service",
+      "subscription.billing-engine"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "analytics.customer-journey",
+    "system": "analytics",
+    "team": "data-science",
+    "domain": "analytics",
+    "dependencies": [
+      "data-lake.customer-events",
+      "ml.model-inference"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "search.customer-search",
+    "system": "search",
+    "team": "platform",
+    "domain": "platform",
+    "dependencies": [
+      "customer.profile-api",
+      "data-store.redis-cache"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "mobile.push-notification",
+    "system": "mobile",
+    "team": "platform",
+    "domain": "communication",
+    "dependencies": [
+      "notification.sms-service",
+      "customer.profile-api"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "document.generation-service",
+    "system": "document",
+    "team": "platform",
+    "domain": "document",
+    "dependencies": [
+      "customer.profile-api",
+      "accounting.ledger"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "document.archive-service",
+    "system": "document",
+    "team": "platform",
+    "domain": "document",
+    "dependencies": [
+      "document.generation-service"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "dispute.management-api",
+    "system": "dispute",
+    "team": "customer-service",
+    "domain": "customer-service",
+    "dependencies": [
+      "card.core-service",
+      "payment.pix-api",
+      "security.audit-logger"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "chargeback.processor",
+    "system": "chargeback",
+    "team": "customer-service",
+    "domain": "customer-service",
+    "dependencies": [
+      "dispute.management-api",
+      "payment.settlement-api"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "reversal.transaction-service",
+    "system": "reversal",
+    "team": "payments",
+    "domain": "payments",
+    "dependencies": [
+      "payment.settlement-api",
+      "accounting.ledger"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "refund.processor",
+    "system": "refund",
+    "team": "payments",
+    "domain": "payments",
+    "dependencies": [
+      "reversal.transaction-service",
+      "notification.email-service"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "limit.management-service",
+    "system": "limit",
+    "team": "risk-analytics",
+    "domain": "risk",
+    "dependencies": [
+      "customer.profile-api",
+      "score.mule-account",
+      "accounting.ledger"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "velocity.check-engine",
+    "system": "velocity",
+    "team": "fraud-prevention",
+    "domain": "risk",
+    "dependencies": [
+      "data-store.redis-cache",
+      "fraud-engine.viper-api"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "behavior.anomaly-detector",
+    "system": "behavior",
+    "team": "data-science",
+    "domain": "analytics",
+    "dependencies": [
+      "ml.model-inference",
+      "data-lake.customer-events",
+      "fraud-engine.viper-api"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "network.graph-analysis",
+    "system": "network",
+    "team": "risk-analytics",
+    "domain": "risk",
+    "dependencies": [
+      "data-lake.transactions",
+      "ml.model-inference"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "external.document-validator",
+    "system": "external",
+    "team": "compliance",
+    "domain": "compliance",
+    "dependencies": [],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "external.sanctions-list",
+    "system": "external",
+    "team": "compliance",
+    "domain": "compliance",
+    "dependencies": [],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "external.market-data",
+    "system": "external",
+    "team": "wealth",
+    "domain": "investment",
+    "dependencies": [],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "feedback.survey-api",
+    "system": "feedback",
+    "team": "customer-service",
+    "domain": "customer-service",
+    "dependencies": [
+      "customer.profile-api",
+      "data-lake.customer-events"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "rating.service-quality",
+    "system": "rating",
+    "team": "customer-service",
+    "domain": "customer-service",
+    "dependencies": [
+      "feedback.survey-api",
+      "customer.profile-api"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "chatbot.conversation-engine",
+    "system": "chatbot",
+    "team": "customer-service",
+    "domain": "customer-service",
+    "dependencies": [
+      "customer.profile-api",
+      "ml.model-inference"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "help-desk.ticket-management",
+    "system": "help-desk",
+    "team": "customer-service",
+    "domain": "customer-service",
+    "dependencies": [
+      "customer.profile-api",
+      "security.audit-logger"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "knowledge-base.article-service",
+    "system": "knowledge-base",
+    "team": "customer-service",
+    "domain": "customer-service",
+    "dependencies": [
+      "search.customer-search"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "translation.i18n-service",
+    "system": "translation",
+    "team": "platform",
+    "domain": "platform",
+    "dependencies": [],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "localization.currency-converter",
+    "system": "localization",
+    "team": "payments",
+    "domain": "payments",
+    "dependencies": [
+      "external.market-data",
+      "data-store.redis-cache"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "tax.calculation-engine",
+    "system": "tax",
+    "team": "finance",
+    "domain": "finance",
+    "dependencies": [
+      "accounting.ledger",
+      "customer.profile-api"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "invoice.generation-api",
+    "system": "invoice",
+    "team": "finance",
+    "domain": "finance",
+    "dependencies": [
+      "document.generation-service",
+      "accounting.ledger"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "expense.management-api",
+    "system": "expense",
+    "team": "finance",
+    "domain": "finance",
+    "dependencies": [
+      "accounting.ledger",
+      "employee.registry"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "employee.registry",
+    "system": "employee",
+    "team": "hr",
+    "domain": "hr",
+    "dependencies": [],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "payroll.processing-engine",
+    "system": "payroll",
+    "team": "finance",
+    "domain": "finance",
+    "dependencies": [
+      "employee.registry",
+      "accounting.ledger"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "attendance.tracking-system",
+    "system": "attendance",
+    "team": "hr",
+    "domain": "hr",
+    "dependencies": [
+      "employee.registry"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "leave.management-api",
+    "system": "leave",
+    "team": "hr",
+    "domain": "hr",
+    "dependencies": [
+      "employee.registry",
+      "notification.email-service"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "performance.evaluation-system",
+    "system": "performance",
+    "team": "hr",
+    "domain": "hr",
+    "dependencies": [
+      "employee.registry",
+      "feedback.survey-api"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "training.learning-platform",
+    "system": "training",
+    "team": "hr",
+    "domain": "hr",
+    "dependencies": [
+      "employee.registry",
+      "document.generation-service"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "recruitment.job-portal",
+    "system": "recruitment",
+    "team": "hr",
+    "domain": "hr",
+    "dependencies": [
+      "employee.registry"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "asset.management-system",
+    "system": "asset",
+    "team": "operations",
+    "domain": "operations",
+    "dependencies": [
+      "employee.registry",
+      "accounting.ledger"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "facility.booking-api",
+    "system": "facility",
+    "team": "operations",
+    "domain": "operations",
+    "dependencies": [
+      "employee.registry",
+      "notification.email-service"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "office.expense-tracking",
+    "system": "office",
+    "team": "operations",
+    "domain": "operations",
+    "dependencies": [
+      "expense.management-api",
+      "employee.registry"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "vendor.management-api",
+    "system": "vendor",
+    "team": "procurement",
+    "domain": "procurement",
+    "dependencies": [
+      "compliance.kyc",
+      "accounting.ledger"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "procurement.order-system",
+    "system": "procurement",
+    "team": "procurement",
+    "domain": "procurement",
+    "dependencies": [
+      "vendor.management-api",
+      "inventory.stock-management"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "inventory.stock-management",
+    "system": "inventory",
+    "team": "operations",
+    "domain": "operations",
+    "dependencies": [
+      "accounting.ledger"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "logistics.shipment-tracking",
+    "system": "logistics",
+    "team": "operations",
+    "domain": "operations",
+    "dependencies": [
+      "vendor.management-api",
+      "notification.email-service"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "warranty.claim-processor",
+    "system": "warranty",
+    "team": "customer-service",
+    "domain": "customer-service",
+    "dependencies": [
+      "customer.profile-api",
+      "inventory.stock-management"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "migration.data-sync",
+    "system": "migration",
+    "team": "data-engineering",
+    "domain": "data",
+    "dependencies": [
+      "data-lake.customer-events",
+      "data-lake.transactions"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "backup.disaster-recovery",
+    "system": "backup",
+    "team": "platform",
+    "domain": "platform",
+    "dependencies": [],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  },
+  {
+    "name": "test.environment-provisioner",
+    "system": "test",
+    "team": "platform",
+    "domain": "platform",
+    "dependencies": [
+      "core.auth-service"
+    ],
+    "repositoryUrl": "",
+    "documentationUrl": ""
+  }
+]
